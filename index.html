@@ -199,6 +199,9 @@
 
 
 <script>
+  document.addEventListener("keydown", (e) => {
+    e.preventDefault();
+  });
 const card = document.querySelector('.card');
 const isTouch = window.matchMedia("(pointer: coarse)").matches;
 
@@ -303,5 +306,6 @@ setTimeout(typeLoop, 800);
 
 </body>
 </html>
+
 
 
