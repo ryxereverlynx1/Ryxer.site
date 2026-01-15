@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Profile</title>
+
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      perspective: 1200px;
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      height: 100vh;
+      background: url('background.gif') center/cover no-repeat fixed;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+    }
+
+    .overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.55);
+      backdrop-filter: blur(6px);
+    }
+
+    .card {
+      scale: 1.20;
+      position: relative;
+      width: 420px;
+      background: linear-gradient(180deg, rgba(41, 15, 90, 0.9), rgba(93, 6, 120, 0.95));
+      border-radius: 20px;
+      padding: 26px;
+      box-shadow: 0 20px 60px rgba(0,0,0,.6);
+      animation: fadeIn 1s ease;
+      transform-style: preserve-3d;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+      
+}
+
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .avatar {
+      width: 78px;
+      height: 78px;
+      border-radius: 50%;
+      background: url('avatar.png') center/cover no-repeat;
+      box-shadow: 0 0 25px rgba(180, 10, 202, 0.8);
+    }
+
+    .location {
+      font-size: 14px;
+      color: #e398d4;
+    }
+
+    .username {
+      margin-top: 12px;
+      font-size: 28px;
+      font-weight: 700;
+      color: #a302bf;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      -webkit-text-stroke: 0.1px #e398d4;
+        text-shadow:
+        0 0 5px rgba(255,155,255,.6),
+        0 0 15px rgba(255,155,255,.4);
+    }
+
+
+    .bio {
+      margin-top: 10px;
+      font-size: 15px;
+      line-height: 1.6;
+      color: #e398d4;
+    }
+
+    .socials {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 22px;
+    }
+
+    .socials a {
+      width: 46px;
+      height: 46px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255,255,255,0.1);
+      border-radius: 50%;
+      color: #fff;
+      font-size: 20px;
+      transition: .3s;
+    }
+
+    .socials a:hover {
+      transform: scale(1.15);
+      background: #e494db;
+      color: #000;
+      box-shadow: 0 0 20px #d17bbd;
+    }
+    @media (max-width: 768px) {
+      body {
+        padding: 20px;
+      }
+
+      .card {
+        scale: 1;
+        width: 100%;
+        max-width: 360px;
+        padding: 20px;
+      }
+
+      .avatar {
+        width: 64px;
+        height: 64px;
+      }
+
+      .username {
+        font-size: 22px;
+        margin-top: 10px;
+      }
+
+      .bio {
+        font-size: 14px;
+        line-height: 1.5;
+      }
+
+      .socials {
+        margin-top: 18px;
+      }
+
+      .socials a {
+        width: 42px;
+        height: 42px;
+        font-size: 18px;
+      }
+    }
+
+    @media (max-width: 420px) {
+      .card {
+        max-width: 320px;
+      }
+
+      .username {
+        font-size: 20px;
+      }
+    }
+
+  </style>
+</head>
+<body>
+
+<div class="overlay"></div>
+
+
+<div class="card">
+  <div class="top">
+    <div class="avatar"></div>
+    <div class="location"><i class="fa-solid fa-location-dot"></i> India</div>
+  </div>
+
+  <div class="username">
+    RyxerEverlynx
+  </div>
+
+  <div class="bio">
+    <div id="typewriter"></div>
+
+  <div class="socials">
+    <a href="https://discord.com/users/1321468844748968060"><i class="fab fa-discord"></i></a>
+    <a href="https://www.instagram.com/itz_ryxer/"><i class="fab fa-instagram"></i></a>
+    <a href="https://portfolio.ryxer.site/"><i class="fa-solid fa-user"></i></a>
+    <a href="https://github.com/ryxereverlynx1"><i class="fab fa-github"></i></a>
+    <a href="https://www.youtube.com/channel/UCy_23DLCTzrr7CBCnA51D2A"><i class="fab fa-youtube"></i></a>
+  </div>
+
+
+<script>
+const card = document.querySelector('.card');
+const isTouch = window.matchMedia("(pointer: coarse)").matches;
+
+if (!isTouch) {
+  card.addEventListener('mousemove', (e) => {
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+
+    const rotateX = -(y - centerY) / 15;
+    const rotateY = (x - centerX) / 15;
+
+    card.style.transform = `
+      rotateX(${rotateX}deg)
+      rotateY(${rotateY}deg)
+      scale(1.05)
+    `;
+    card.style.boxShadow = '0 35px 80px rgba(163, 2, 191, 0.6)';
+  });
+
+  card.addEventListener('mouseleave', () => {
+    card.style.transform = 'rotateX(0) rotateY(0) scale(1)';
+    card.style.boxShadow = '0 20px 60px rgba(0,0,0,.6)';
+  });
+}
+
+
+const texts = [
+  "ᴘʀᴏᴊᴇᴄᴛѕ - Successful Minecraft Server, and few websites.",
+  "ʀᴇᴀʟ ʟᴀɴɢᴜᴀɢᴇѕ - I only know English and Hindi!",
+  "ɢᴀᴍᴇѕ - I play Roblox, Minecraft.",
+  "ᴄᴏᴅɪɴɢ ʟᴀɴɢᴜᴀɢᴇѕ - I know HTML, CSS, JS, Python and Skript"
+];
+
+const el = document.getElementById("typewriter");
+
+const ghost = document.createElement("div");
+ghost.style.position = "absolute";
+ghost.style.visibility = "hidden";
+ghost.style.pointerEvents = "none";
+ghost.style.width = el.offsetWidth + "px";
+
+const bioStyles = getComputedStyle(el);
+ghost.style.fontFamily = bioStyles.fontFamily;
+ghost.style.fontSize = bioStyles.fontSize;
+ghost.style.lineHeight = bioStyles.lineHeight;
+ghost.style.whiteSpace = "normal";
+
+document.body.appendChild(ghost);
+
+let maxHeight = 0;
+texts.forEach(text => {
+  ghost.textContent = text;
+  maxHeight = Math.max(maxHeight, ghost.offsetHeight);
+});
+
+el.style.minHeight = maxHeight + "px";
+document.body.removeChild(ghost);
+
+let textIndex = 0;
+let charIndex = 0;
+let deleting = false;
+
+const typeSpeed = 50;
+const deleteSpeed = 20;
+const holdAfterType = 1200;
+const holdAfterDelete = 400;
+
+function typeLoop() {
+  const current = texts[textIndex];
+
+  if (!deleting) {
+    if (charIndex < current.length) {
+      el.textContent += current.charAt(charIndex);
+      charIndex++;
+      setTimeout(typeLoop, typeSpeed);
+    } else {
+      setTimeout(() => deleting = true, holdAfterType);
+      setTimeout(typeLoop, holdAfterType);
+    }
+  } else {
+    if (charIndex > 0) {
+      el.textContent = current.substring(0, charIndex - 1);
+      charIndex--;
+      setTimeout(typeLoop, deleteSpeed);
+    } else {
+      deleting = false;
+      textIndex = (textIndex + 1) % texts.length;
+      setTimeout(typeLoop, holdAfterDelete);
+    }
+  }
+}
+
+setTimeout(typeLoop, 800);
+
+
+</script>
+
+
+</body>
+</html>
