@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Everlynx AI</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/lib/marked.umd.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/tokyo-night-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+</head>
+<body>
+
+    <div id="sidebar">
+        <h2 class="logo">Everlynx AI</h2>
+        <button class="sidebar-btn" onclick="startNewChat()">+ New Conversation</button>
+        <div class="history-label">RECENT</div>
+        <div id="history-list"></div>
+    </div>
+
+    <div id="main">
+        <div id="chat-window">
+            <div class="msg ai">Everlynx system active. How can I assist?</div>
+            <div id="thinking" class="thinking">Everlynx is analyzing...</div>
+        </div>
+
+        <div class="input-box">
+            <input type="text" id="userInput" placeholder="Ask anything..." onkeypress="if(event.key==='Enter') sendMessage()">
+            <button class="send-btn" onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
