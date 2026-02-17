@@ -20,7 +20,7 @@ async function sendMessage() {
     chatWindow.scrollTop = chatWindow.scrollHeight;
 
     try {
-        const response = await fetch('http://192.168.1.17:8082/chat', {
+        const response = await fetch('https://api.ryxer.site:8082/chat', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ messages: currentMessages })
@@ -82,4 +82,5 @@ function startNewChat() {
     location.reload(); // Simplest way to reset the state
 
 }
+
 
