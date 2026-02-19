@@ -1,213 +1,305 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="icon" type="image/png" href="avatar.png">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EverLynx AI</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ryxer Everlynx</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="avatar.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="avatar.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="avatar.png">
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      perspective: 1200px;
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      height: 100vh;
+      background: url('background.gif') center/cover no-repeat fixed;
+      display: flex;
+      align-items: center;
+      background-color: rgba(7, 7, 22, 0.37);
+      justify-content: center;
+      color: #fff;
+      backdrop-filter: blur(0.6rem);
+
+    }
+
+
+    .card {
+      scale: 1.20;
+      position: relative;
+      width: 420px;
+      background: linear-gradient(180deg, rgba(41, 15, 90, 0.9), rgba(93, 6, 120, 0.95));
+      border-radius: 20px;
+      padding: 26px;
+      box-shadow: 0 20px 60px rgba(0,0,0,.6);
+      animation: fadeIn 1s ease;
+      transform-style: preserve-3d;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+      
+}
+
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .avatar {
+      width: 78px;
+      height: 78px;
+      border-radius: 50%;
+      background: url('avatar.png') center/cover no-repeat;
+      box-shadow: 0 0 25px rgba(180, 10, 202, 0.8);
+    }
+
+    .location {
+      font-size: 14px;
+      color: #e398d4;
+    }
+
+    .username {
+      margin-top: 12px;
+      font-size: 28px;
+      font-weight: 700;
+      color: #a302bf;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      -webkit-text-stroke: 0.1px #e398d4;
+        text-shadow:
+        0 0 5px rgba(255,155,255,.6),
+        0 0 15px rgba(255,155,255,.4);
+    }
+
+
+    .bio {
+      margin-top: 10px;
+      font-size: 15px;
+      line-height: 1.6;
+      color: #e398d4;
+    }
+
+    .socials {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 22px;
+    }
+
+    .socials a {
+      width: 46px;
+      height: 46px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255,255,255,0.1);
+      border-radius: 50%;
+      color: #fff;
+      font-size: 20px;
+      transition: .3s;
+    }
+
+    .socials a:hover {
+      transform: scale(1.15);
+      background: #e494db;
+      color: #000;
+      box-shadow: 0 0 20px #d17bbd;
+    }
+    @media (max-width: 768px) {
+      body {
+        padding: 20px;
+      }
+
+      .card {
+        scale: 1;
+        width: 100%;
+        max-width: 360px;
+        padding: 20px;
+      }
+
+      .avatar {
+        width: 64px;
+        height: 64px;
+      }
+
+      .username {
+        font-size: 22px;
+        margin-top: 10px;
+      }
+
+      .bio {
+        font-size: 14px;
+        line-height: 1.5;
+      }
+
+      .socials {
+        margin-top: 18px;
+      }
+
+      .socials a {
+        width: 42px;
+        height: 42px;
+        font-size: 18px;
+      }
+    }
+
+    @media (max-width: 420px) {
+      .card {
+        max-width: 320px;
+      }
+
+      .username {
+        font-size: 20px;
+      }
+    }
+
+  </style>
 </head>
 <body>
-    <div id="auth-container" class="auth-container">
-        <div class="auth-card">
-            <div class="auth-header">
-                <div class="logo">
-                    <span class="logo-icon">◇</span>
-                    <h1>EverLynx AI</h1>
-                </div>
-                <p class="auth-tagline">Intelligent. Calm. Futuristic.</p>
-            </div>
 
-            <form id="login-form" class="auth-form">
-                <h2>Welcome Back</h2>
-                <div class="input-group">
-                    <label for="login-email">Email</label>
-                    <input type="email" id="login-email" required placeholder="you@example.com">
-                </div>
-                <div class="input-group">
-                    <label for="login-password">Password</label>
-                    <input type="password" id="login-password" required placeholder="••••••••">
-                </div>
-                <div class="auth-row">
-                    <a href="#" id="show-forgot" class="auth-link">Forgot password?</a>
-                </div>
-                <p id="login-error" class="auth-error"></p>
-                <button type="submit" class="btn-primary">Sign In</button>
-                <p class="auth-switch">Don't have an account? <a href="#" id="show-signup">Sign up</a></p>
-            </form>
 
-            <form id="signup-form" class="auth-form hidden">
-                <h2>Create Account</h2>
-                <div class="input-group">
-                    <label for="signup-email">Email</label>
-                    <input type="email" id="signup-email" required placeholder="you@example.com">
-                </div>
-                <div class="input-group">
-                    <label for="signup-password">Password</label>
-                    <input type="password" id="signup-password" required placeholder="••••••••" minlength="6">
-                </div>
-                <p id="signup-error" class="auth-error"></p>
-                <button type="submit" class="btn-primary">Create Account</button>
-                <p class="auth-switch">Already have an account? <a href="#" id="show-login">Sign in</a></p>
-            </form>
-        </div>
-    </div>
 
-    <div id="app-container" class="app-container">
-        <aside class="sidebar">
-            <div class="sidebar-header">
-                <div class="logo">
-                    <span class="logo-icon">◇</span>
-                    <span class="logo-text">EverLynx AI</span>
-                </div>
-            </div>
-            <nav class="sidebar-nav">
-                <button id="btn-new-chat" class="nav-btn">
-                    <span class="nav-icon">+</span>
-                    New Chat
-                </button>
-                <div class="nav-section">
-                    <h3>Chat History</h3>
-                    <ul id="chat-history-list"></ul>
-                </div>
-            </nav>
-            <div class="sidebar-footer">
-                <button id="btn-settings" class="nav-btn">
-                    <span class="nav-icon">⚙</span>
-                    Settings
-                </button>
-                <button id="btn-profile" class="nav-btn">
-                    <span id="sidebar-user-avatar" class="nav-icon">👤</span>
-                    <span id="user-email-display">Profile</span>
-                </button>
-                <button id="btn-logout" class="nav-btn">
-                    <span class="nav-icon">⎋</span>
-                    Logout
-                </button>
-            </div>
-        </aside>
+<div class="card">
+  <div class="top">
+    <div class="avatar"></div>
+    <div class="location"><i class="fa-solid fa-location-dot"></i> India</div>
+  </div>
 
-        <main class="main-content">
-            <header class="main-header">
-                <button id="btn-toggle-sidebar" class="icon-btn" aria-label="Toggle sidebar">☰</button>
-                <div class="header-actions">
-                    <div class="theme-menu" id="theme-menu">
-                        <button id="theme-menu-btn" class="theme-menu-btn" type="button" aria-haspopup="true" aria-expanded="false" title="Theme">
-                            <span class="theme-menu-dot" aria-hidden="true"></span>
-                            <span id="theme-menu-label" class="theme-menu-label">Dark</span>
-                            <span class="theme-menu-chevron" aria-hidden="true">▾</span>
-                        </button>
-                        <div id="theme-menu-list" class="theme-menu-list hidden" role="menu" aria-label="Theme menu">
-                            <button class="theme-menu-item" type="button" data-theme="dark" role="menuitem">Dark</button>
-                            <button class="theme-menu-item" type="button" data-theme="everlynx" role="menuitem">Everlynx</button>
-                        </div>
-                    </div>
-                </div>
-            </header>
+  <div class="username">
+    RyxerEverlynx
+  </div>
 
-            <div class="chat-area">
-                <div id="welcome-screen" class="welcome-screen">
-                    <h2>EverLynx AI</h2>
-                    <p>Your intelligent assistant for writing, code, and general Q&A.</p>
-                    <div class="welcome-suggestions">
-                        <button class="suggestion-btn" data-prompt="Help me write a professional email">✉️ Writing assistance</button>
-                        <button class="suggestion-btn" data-prompt="Generate a React component for a todo list">💻 Code generation</button>
-                        <button class="suggestion-btn" data-prompt="What are the best practices for API design?">❓ General Q&A</button>
-                    </div>
-                </div>
-                <div id="chat-messages" class="chat-messages"></div>
-            </div>
+  <div class="bio">
+    <div id="typewriter"></div>
+  <div class="socials">
+    <a href="https://discord.com/users/1321468844748968060"><i class="fab fa-discord"></i></a>
+    <a href="/store"><i class="fa-solid fa-bag-shopping"></i></a>
+    <a href="/portfolio"><i class="fa-solid fa-user"></i></a>
+    <a href="/ai"><i class="fa-solid fa-robot"></i></a>
+    <a href="https://github.com/ryxereverlynx1"><i class="fab fa-github"></i></a>
+    <a href="https://www.youtube.com/channel/UCy_23DLCTzrr7CBCnA51D2A"><i class="fab fa-youtube"></i></a>
+  </div>
 
-            <div class="input-area">
-                <div class="input-wrapper">
-                    <textarea id="chat-input" placeholder="Message EverLynx AI..." rows="1"></textarea>
-                    <button id="btn-send" class="send-btn" aria-label="Send message">
-                        <span>→</span>
-                    </button>
-                </div>
-            </div>
-        </main>
-    </div>
 
-    <div id="settings-modal" class="modal hidden">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>Settings</h2>
-                <button id="btn-close-settings" class="icon-btn">×</button>
-            </div>
-            <div class="modal-body">
-                <div class="setting-item">
-                    <label>Background Music</label>
-                    <div class="music-settings-container">
-                        <div class="music-info">
-                            <span id="settings-now-playing">Default Theme</span>
-                            <audio id="settings-audio" loop autoplay preload="auto">
-                                <source id="audio-source" src="default-music.mp3" type="audio/mpeg">
-                            </audio>
-                        </div>
-                        
-                        <div class="music-controls">
-                            <button type="button" id="btn-settings-play" class="theme-btn">▶ Play</button>
-                            <input type="file" id="music-upload-input" accept="audio/*,video/mp4" class="hidden">
-                        </div>
-                        <div class="volume-control">
-                            <span class="nav-icon"></span>
-                            <input type="range" id="music-volume" min="0" max="1" step="0.01" value="0.5">
-                        </div>
-                    </div>
-                </div>
-                
+<script>
+  document.addEventListener("keydown", (e) => {
+    e.preventDefault();
+  });
+const card = document.querySelector('.card');
+const isTouch = window.matchMedia("(pointer: coarse)").matches;
 
-                <div class="setting-item">
-                    <label>Profile Picture</label>
-                    <div class="pfp-upload-container">
-                        <img id="settings-pfp-preview" src="default-avatar.png" alt="Profile Preview" class="avatar-img">
-                        <div class="pfp-controls">
-                            <input type="file" id="pfp-upload-input" accept="image/*" class="hidden">
-                            <button type="button" class="theme-btn" onclick="document.getElementById('pfp-upload-input').click()">Choose Image</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="setting-item">
-                    <label>Theme</label>
-                    <div class="theme-toggle">
-                        <button id="theme-dark" class="theme-btn">Dark</button>
-                        <button id="theme-everlynx" class="theme-btn">Everlynx</button>
-                    </div>
-                    <p class="setting-hint">You can also switch themes from the header dropdown.</p>
-                </div>
-            </div>
-        </div>
-    </div>
+if (!isTouch) {
+  card.addEventListener('mousemove', (e) => {
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
 
-    <div id="forgot-modal" class="modal hidden">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>Reset Password</h2>
-                <button id="btn-close-forgot" class="icon-btn">×</button>
-            </div>
-            <div class="modal-body">
-                <form id="forgot-form" class="auth-form">
-                    <div class="input-group">
-                        <label for="forgot-email">Email</label>
-                        <input type="email" id="forgot-email" required placeholder="you@example.com">
-                    </div>
-                    <div class="input-group">
-                        <label for="forgot-new-password">New Password</label>
-                        <input type="password" id="forgot-new-password" required minlength="6" placeholder="••••••••">
-                    </div>
-                    <p id="forgot-error" class="auth-error"></p>
-                    <button type="submit" class="btn-primary">Update Password</button>
-                </form>
-                <p class="setting-hint">This is a frontend-only demo. Password resets update your local browser storage only.</p>
-            </div>
-        </div>
-    </div>
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
 
-    <div id="offline-banner" class="offline-banner hidden">
-        You're offline. AI features require an internet connection.
-    </div>
+    const rotateX = -(y - centerY) / 15;
+    const rotateY = (x - centerX) / 15;
 
-    <script src="script.js"></script>
+    card.style.transform = `
+      rotateX(${rotateX}deg)
+      rotateY(${rotateY}deg)
+      scale(1.05)
+    `;
+    card.style.boxShadow = '0 35px 80px rgba(163, 2, 191, 0.6)';
+  });
+
+  card.addEventListener('mouseleave', () => {
+    card.style.transform = 'rotateX(0) rotateY(0) scale(1)';
+    card.style.boxShadow = '0 20px 60px rgba(0,0,0,.6)';
+  });
+}
+
+
+const texts = [
+  "ᴘʀᴏᴊᴇᴄᴛѕ - Successful Minecraft Server, and few websites.",
+  "ʀᴇᴀʟ ʟᴀɴɢᴜᴀɢᴇѕ - I only know English and Hindi!",
+  "ɢᴀᴍᴇѕ - I play Roblox, Minecraft.",
+  "ᴄᴏᴅɪɴɢ ʟᴀɴɢᴜᴀɢᴇѕ - I know HTML, CSS, JS, Python and Skript"
+];
+
+const el = document.getElementById("typewriter");
+
+const ghost = document.createElement("div");
+ghost.style.position = "absolute";
+ghost.style.visibility = "hidden";
+ghost.style.pointerEvents = "none";
+ghost.style.width = el.offsetWidth + "px";
+
+const bioStyles = getComputedStyle(el);
+ghost.style.fontFamily = bioStyles.fontFamily;
+ghost.style.fontSize = bioStyles.fontSize;
+ghost.style.lineHeight = bioStyles.lineHeight;
+ghost.style.whiteSpace = "normal";
+
+document.body.appendChild(ghost);
+
+let maxHeight = 0;
+texts.forEach(text => {
+  ghost.textContent = text;
+  maxHeight = Math.max(maxHeight, ghost.offsetHeight);
+});
+
+el.style.minHeight = maxHeight + "px";
+document.body.removeChild(ghost);
+
+let textIndex = 0;
+let charIndex = 0;
+let deleting = false;
+
+const typeSpeed = 50;
+const deleteSpeed = 20;
+const holdAfterType = 1200;
+const holdAfterDelete = 400;
+
+function typeLoop() {
+  const current = texts[textIndex];
+
+  if (!deleting) {
+    if (charIndex < current.length) {
+      el.textContent += current.charAt(charIndex);
+      charIndex++;
+      setTimeout(typeLoop, typeSpeed);
+    } else {
+      setTimeout(() => deleting = true, holdAfterType);
+      setTimeout(typeLoop, holdAfterType);
+    }
+  } else {
+    if (charIndex > 0) {
+      el.textContent = current.substring(0, charIndex - 1);
+      charIndex--;
+      setTimeout(typeLoop, deleteSpeed);
+    } else {
+      deleting = false;
+      textIndex = (textIndex + 1) % texts.length;
+      setTimeout(typeLoop, holdAfterDelete);
+    }
+  }
+}
+
+setTimeout(typeLoop, 800);
+
+
+</script>
+
+
 </body>
 </html>
+
