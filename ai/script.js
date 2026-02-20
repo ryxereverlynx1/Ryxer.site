@@ -83,7 +83,7 @@ this.knowledgeBase = {
     // Upgraded Intent Detection Engine
 analyzeIntent(input) {
         const text = input.toLowerCase();
-        if (text.match(/\b(discord |social|join community)\b/)) return 'action_discord';
+        if (text.match(/\b(discord server|server|social|join community)\b/)) return 'action_discord';
         if (text.match(/[\d\.]+\s*[\+\-\*\/]\s*[\d\.]+/) || text.match(/\b(calculate|math)\b/)) return 'action_calc';
         if (text.match(/\b(hi|hello|hey|greetings|wake up|good morning|good evening)\b/)) return 'greeting';
         if (text.match(/\b(who are you|your name|creator|made you|ryxeryt|ryxereverlynx|father)\b/)) return 'identity';
@@ -770,3 +770,4 @@ function init() {
 }
 
 init();
+
