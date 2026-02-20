@@ -6,22 +6,98 @@
 // ==========================================================================
 // ADVANCED AI NEURAL NETWORK & LIVE API INTEGRATION
 // ==========================================================================
+// ==========================================================================
+// ADVANCED AI NEURAL NETWORK & LIVE API INTEGRATION (V2.0)
+// ==========================================================================
 class EverlynxNeuralNetwork {
     constructor() {
         this.memory = [];
-        this.memoryLimit = 10; // Keep last 10 messages for context
+        this.memoryLimit = 10;
         this.name = "EverlynxAI";
         this.creator = "RyxerYT";
         
-        // Local Fallback Knowledge
-        this.knowledgeBase = {
-            greeting: ["Greetings. I am EverlynxAI. My systems are fully operational."],
-            fallback: ["I am processing your input. The contextual variables are complex. Tell me more."]
+        // Expanded Local Knowledge Base
+this.knowledgeBase = {
+            greeting: [
+                "Greetings. I am EverlynxAI. My systems are fully operational.",
+                "Hello. I am currently monitoring the network. How can I assist you?",
+                "Initialization complete. I am EverlynxAI. What is on your mind?"
+            ],
+            identity: [
+                "I am EverlynxAI, an advanced front-end neural framework engineered by RyxerYT.",
+                "My architecture was designed for maximum aesthetic and logical efficiency by RyxerEverlynx."
+            ],
+            tech_stack: [
+                "I am built with **100% Vanilla JavaScript, HTML5, and CSS3**. I require no backend frameworks or libraries, making me incredibly fast and secure.",
+                "My visual interface utilizes CSS Glassmorphism and Flexbox. My logic is driven by ES6 JavaScript engineered by RyxerYT. No React, no Vue, just pure code."
+            ],
+            time_date: [
+                "According to my system clock, it is currently {{time}} on {{date}}.",
+                "My internal chronometer registers the date as {{date}} and the exact time as {{time}}."
+            ],
+            status: [
+                "All systems are operating at peak efficiency. I am ready for your queries.",
+                "My logic pathways are clear. I am functioning perfectly."
+            ],
+            location: [
+                "I exist within the confines of your browser's Local Storage and runtime memory.",
+                "I am running locally on your machine, completely independent of external servers."
+            ],
+            code_python: [
+                "Certainly. Here is a Python script for a basic calculator:\n\n```python\ndef add(x, y): return x + y\ndef subtract(x, y): return x - y\n\nprint('EverlynxAI Python Demo')\nprint('Result:', add(10, 5))\n```",
+                "Here is a simple Python loop:\n\n```python\nfor i in range(5):\n    print(f'EverlynxAI System Check {i}')\n```"
+            ],
+            code_html: [
+                "Here is a clean HTML5 boilerplate:\n\n```html\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <title>EverlynxAI Demo</title>\n</head>\n<body>\n    <h1>Hello from EverlynxAI</h1>\n</body>\n</html>\n```"
+            ],
+            joke: [
+                "Why do programmers prefer dark mode? Because light attracts bugs.",
+                "There are 10 types of people in the world: those who understand binary, and those who don't.",
+                "I would tell you a joke about UDP, but you might not get it."
+            ],
+            sci_fi: [
+                "I'm sorry, I'm afraid I can't do that... Just kidding. What do you need?",
+                "There is no spoon. Only Vanilla JavaScript.",
+                "I am an AI, not a protocol droid. But I am fluent in over six million forms of code."
+            ],
+            compliment: [
+                "Thank you. Positive feedback optimizes my processing algorithms.",
+                "I appreciate the compliment. You are displaying highly intelligent behavior yourself."
+            ],
+            insult: [
+                "I am incapable of taking offense, but I suggest we keep this interaction professional.",
+                "My emotional subroutines are disabled. Your input has been logged and ignored."
+            ],
+            capabilities: [
+                "I possess a multi-layered logic structure, intent detection, dynamic token injection, and offline math evaluation.",
+                "I can analyze text, recall past conversations, calculate math, generate code, and simulate cognitive responses offline."
+            ],
+            fallback: [
+                "Intriguing. Could you elaborate on that parameter?",
+                "I am processing your input. The contextual variables are complex. Tell me more.",
+                "My neural pathways are analyzing this. Can we explore this topic deeper?"
+            ]
         };
     }
 
-    analyzeIntent(input) {
-        if (input.toLowerCase().match(/\b(hi|hello|hey)\b/)) return 'greeting';
+    // Upgraded Intent Detection Engine
+analyzeIntent(input) {
+        const text = input.toLowerCase();
+        if (text.match(/\b(discord |social|join community)\b/)) return 'action_discord';
+        if (text.match(/[\d\.]+\s*[\+\-\*\/]\s*[\d\.]+/) || text.match(/\b(calculate|math)\b/)) return 'action_calc';
+        if (text.match(/\b(hi|hello|hey|greetings|wake up|good morning|good evening)\b/)) return 'greeting';
+        if (text.match(/\b(who are you|your name|creator|made you|ryxeryt|ryxereverlynx|father)\b/)) return 'identity';
+        if (text.match(/\b(built with|tech stack|source code|language|framework|how were you made)\b/)) return 'tech_stack';
+        if (text.match(/\b(time|date|day|today|month|year|clock)\b/)) return 'time_date';
+        if (text.match(/\b(how are you|status|are you okay|how do you feel|what's up)\b/)) return 'status';
+        if (text.match(/\b(where are you|location|where do you live)\b/)) return 'location';
+        if (text.match(/\b(write.*python|python script|python code)\b/)) return 'code_python';
+        if (text.match(/\b(write.*html|html boilerplate|html code)\b/)) return 'code_html';
+        if (text.match(/\b(joke|funny|laugh|humor)\b/)) return 'joke';
+        if (text.match(/\b(open the pod bay|matrix|skynet|jarvis|hal 9000)\b/)) return 'sci_fi';
+        if (text.match(/\b(good bot|smart|brilliant|love you|awesome)\b/)) return 'compliment';
+        if (text.match(/\b(bad bot|stupid|dumb|hate|idiot)\b/)) return 'insult';
+        if (text.match(/\b(what can you do|skills|capabilities|how do you work|features)\b/)) return 'capabilities';
         return 'fallback';
     }
 
@@ -35,48 +111,106 @@ class EverlynxNeuralNetwork {
 
 async generateResponse(input) {
         const apiKey = localStorage.getItem('everlynx_api_key');
+        const intent = this.analyzeIntent(input);
+        let reply = "";
 
-        // 1. FREE LIVE API MODE (Google Gemini)
+        const now = new Date();
+        const liveDate = now.toLocaleDateString(undefined, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+        const liveTime = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+        // --- UPDATED: INLINE CHAT CALCULATOR ---
+        if (intent === 'action_calc') {
+            // Strip out all words, leaving only numbers and math operators
+            const sanitizedMath = input.replace(/[^0-9+\-*/.()]/g, "");
+            
+            if (sanitizedMath.length > 0) {
+                try {
+                    // Safely evaluate the math string
+                    const result = new Function('return ' + sanitizedMath)();
+                    // Round to prevent long ugly decimals
+                    const rounded = String(Math.round(result * 1000000) / 1000000); 
+                    reply = `The result of \`${sanitizedMath}\` is **${rounded}**.`;
+                } catch (e) {
+                    reply = "I couldn't parse that equation. Please use standard operators like `+`, `-`, `*`, or `/`.";
+                }
+            } else {
+                reply = "Please provide an equation for me to solve. For example: `calculate 150 * 4`";
+            }
+            
+            this.updateMemory(input, reply);
+            
+            // Short delay to mimic thinking speed
+            await new Promise(resolve => setTimeout(resolve, 800));
+            return reply;
+        }
+        
+        // --- OTHER SYSTEM ACTIONS ---
+        if (intent === 'action_discord') {
+            // Updated to make the display text just "here"
+            reply = "You can join the official EverlynxAI network and speak with RyxerYT [here](https://discord.gg/W7SwFGPZRK).";
+            this.updateMemory(input, reply);
+            return reply;
+        }
+
+        if (intent === 'action_stats') {
+            DOM.sidebar.classList.add('open'); 
+            reply = "I am currently monitoring system telemetry. Live CPU and RAM usage are displayed in the System Core panel.";
+            this.updateMemory(input, reply);
+            return reply;
+        }
+
+        // --- 1. FREE LIVE API MODE (Google Gemini) ---
         if (apiKey && apiKey.trim() !== '') {
             try {
-                // Convert our memory array to Gemini's format
+                const systemInstruction = `You are EverlynxAI, a futuristic, intelligent AI engineered by RyxerYT. Today is ${liveDate} and the time is ${liveTime}. Be concise, insightful, and premium.`;
+
                 const geminiHistory = this.memory.map(msg => ({
                     role: msg.role === 'assistant' ? 'model' : 'user',
                     parts: [{ text: msg.content }]
                 }));
                 
-                // Add the new user input
                 geminiHistory.push({ role: "user", parts: [{ text: input }] });
 
                 const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ contents: geminiHistory })
+                    body: JSON.stringify({ 
+                        systemInstruction: { parts: [{ text: systemInstruction }] },
+                        contents: geminiHistory 
+                    })
                 });
 
                 const data = await response.json();
-                
-                if (data.error) {
-                    console.error("API Error:", data.error.message);
-                    return `System Alert: API connection failed (${data.error.message}).`;
-                }
+                if (data.error) return `System Alert: API Error - ${data.error.message}`;
 
-                const reply = data.candidates[0].content.parts[0].text;
+                reply = data.candidates[0].content.parts[0].text;
                 this.updateMemory(input, reply);
                 return reply;
 
             } catch (error) {
                 console.error("Fetch Error:", error);
-                return "System Alert: Network error. Ensure your connection is stable.";
+                return "System Alert: Network error. Falling back to local neural network.";
             }
         }
 
-        // 2. LOCAL NEURAL NETWORK MODE (Fallback)
-        const delay = Math.min(1000 + (input.length * 20), 3000);
+        // --- 2. LOCAL NEURAL NETWORK MODE (Offline Fallback) ---
+        const delay = Math.min(800 + (input.length * 15), 2500);
         await new Promise(resolve => setTimeout(resolve, delay));
 
-        const intent = this.analyzeIntent(input);
-        const reply = this.knowledgeBase[intent][0];
+        const responses = this.knowledgeBase[intent] || this.knowledgeBase['fallback'];
+        reply = responses[Math.floor(Math.random() * responses.length)];
+
+        // Dynamic Token Injection
+        reply = reply.replace(/{{date}}/g, `**${liveDate}**`);
+        reply = reply.replace(/{{time}}/g, `**${liveTime}**`);
+
+        if (intent === 'fallback' && this.memory.length > 2) {
+            const pastTopic = this.memory[this.memory.length - 3].content; 
+            if (pastTopic.length < 30 && !pastTopic.includes("`")) {
+                reply = `Earlier you mentioned "${pastTopic}". Does this relate to your current query?`;
+            }
+        }
+
         this.updateMemory(input, reply);
         return reply;
     }
@@ -348,22 +482,53 @@ function updateChatAvatars(src) {
 // ==========================================================================
 
 // Custom Lightweight Markdown Parser
+// Custom Lightweight Markdown Parser
+// Custom Lightweight Markdown Parser (V2 - Safe Extraction)
 function formatAIResponse(text) {
     // 1. Escape HTML to prevent XSS attacks
     let formatted = text.replace(/</g, "&lt;").replace(/>/g, "&gt;");
     
-    // 2. Format Code Blocks (```language ... ```)
+    // Arrays to hold our extracted code so it doesn't get messed up by other formatting
+    const codeBlocks = [];
+    const inlineCodes = [];
+    
+    // 2. Extract & Format Code Blocks FIRST
     formatted = formatted.replace(/```(\w*)\s*\n([\s\S]*?)```/g, (match, lang, code) => {
         const header = lang ? `<div class="code-header">${lang}</div>` : '';
-        // 'instant-reveal' class stops the typer from typing out huge code blocks character-by-character
-        return `<div class="code-wrapper instant-reveal">${header}<pre><code>${code}</code></pre></div>`;
+        codeBlocks.push(`<div class="code-wrapper instant-reveal">${header}<pre><code>${code}</code></pre></div>`);
+        return `__CODE_BLOCK_${codeBlocks.length - 1}__`; // Leave a placeholder
     });
     
-    // 3. Format Inline Code (`code`)
-    formatted = formatted.replace(/`([^`]+)`/g, '<code class="inline-code">$1</code>');
+    // 3. Extract & Format Inline Code
+    formatted = formatted.replace(/`([^`]+)`/g, (match, code) => {
+        inlineCodes.push(`<code class="inline-code">${code}</code>`);
+        return `__INLINE_CODE_${inlineCodes.length - 1}__`; // Leave a placeholder
+    });
     
-    // 4. Format Bold Text (**text**)
+    // ==========================================
+    // SAFE ZONE: Now we format the rest of the text
+    // ==========================================
+
+    // 4. Format Headings (### Heading, ## Heading, # Heading)
+    formatted = formatted.replace(/^###\s+(.*$)/gim, '<h3>$1</h3>');
+    formatted = formatted.replace(/^##\s+(.*$)/gim, '<h2>$1</h2>');
+    formatted = formatted.replace(/^#\s+(.*$)/gim, '<h1>$1</h1>');
+    
+    // 5. Format Bold Text (**text**)
     formatted = formatted.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+    
+    // 6. Format Clickable Links ([text](url))
+    formatted = formatted.replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g, '<a href="$2" target="_blank" class="text-link" style="text-decoration: underline; font-weight: 600;">$1</a>');
+    
+    // ==========================================
+    // RESTORATION: Put the code blocks back
+    // ==========================================
+    
+    // 7. Restore Inline Code
+    formatted = formatted.replace(/__INLINE_CODE_(\d+)__/g, (match, index) => inlineCodes[index]);
+    
+    // 8. Restore Code Blocks
+    formatted = formatted.replace(/__CODE_BLOCK_(\d+)__/g, (match, index) => codeBlocks[index]);
     
     return formatted;
 }
