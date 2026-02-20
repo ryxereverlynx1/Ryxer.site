@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EverlynxAI | Created by RyxerYT</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body data-theme="everlynx">
+
+    <div id="auth-screen" class="auth-wrapper glass-panel">
+        <div class="auth-box">
+            <h1 class="glow-text">EverlynxAI</h1>
+            <p>Intelligence, redefined. By RyxerEverlynx.</p>
+            
+            <div class="auth-tabs">
+                <button id="tab-login" class="active">Login</button>
+                <button id="tab-register">Register</button>
+            </div>
+
+            <form id="auth-form">
+                <input type="email" id="auth-email" placeholder="Email address" required>
+                <input type="password" id="auth-password" placeholder="Password" required>
+                
+                <div class="auth-options">
+                    <button type="button" id="forgot-password-link" class="text-link">Forgot Password?</button>
+                    <button type="button" id="back-to-login-link" class="text-link hidden">Back to Login</button>
+                </div>
+
+                <button type="submit" id="auth-submit-btn" class="primary-btn">Log In</button>
+            </form>
+
+            <p id="auth-error" class="error-text"></p>
+            <p id="auth-success" class="success-text"></p>
+        </div>
+    </div>
+
+    <div id="app-screen" class="app-layout hidden">
+        
+        <aside id="sidebar" class="sidebar glass-panel">
+            <div class="sidebar-header">
+                <h2 class="glow-text">EverlynxAI</h2>
+                <button id="mobile-close-sidebar" class="icon-btn mobile-only"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+
+            <div class="profile-widget">
+                <div class="avatar-container">
+                    <img id="user-avatar-display" src="assets/default-avatar.png" alt="User Avatar">
+                    <input type="file" id="avatar-upload" accept="image/*" hidden>
+                    <button class="edit-avatar-btn" onclick="document.getElementById('avatar-upload').click()"><i class="fa-solid fa-pen"></i></button>
+                </div>
+                <h3 id="user-display-name">User</h3>
+            </div>
+
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <h4>Settings</h4>
+                    <button class="nav-btn" id="open-settings-btn"><i class="fa-solid fa-sliders"></i> Preferences</button>
+                    <button class="nav-btn" id="clear-chat-btn"><i class="fa-solid fa-trash-can"></i> Clear History</button>
+                </div>
+                
+                <div class="nav-section">
+                    <h4>Themes</h4>
+                    <div class="theme-selector">
+                        <button class="theme-btn active" data-set-theme="everlynx">Everlynx</button>
+                        <button class="theme-btn" data-set-theme="dark">Dark</button>
+                        <button class="theme-btn" data-set-theme="light">Light</button>
+                    </div>
+                </div>
+            </nav>
+
+            <div class="music-player glass-panel-inner">
+                <div class="music-info">
+                    <i class="fa-solid fa-music"></i>
+                    <span id="track-name">default-music.mp3</span>
+                </div>
+                <div class="music-controls">
+                    <button id="music-play-btn" class="icon-btn"><i class="fa-solid fa-play"></i></button>
+                    <input type="range" id="volume-slider" min="0" max="1" step="0.1" value="0.5">
+                    <label for="custom-music-upload" class="icon-btn"><i class="fa-solid fa-upload"></i></label>
+                    <input type="file" id="custom-music-upload" accept="audio/*" hidden>
+                </div>
+                <audio id="bg-audio" loop src="assets/default-music.mp3"></audio>
+            </div>
+
+            <button id="logout-btn" class="nav-btn danger"><i class="fa-solid fa-right-from-bracket"></i> Disconnect</button>
+            <div class="creator-tag">Created by RyxerYT</div>
+        </aside>
+
+        <main class="chat-container">
+            <header class="chat-header glass-panel">
+                <button id="mobile-open-sidebar" class="icon-btn mobile-only"><i class="fa-solid fa-bars"></i></button>
+                <div class="ai-status">
+                    <div class="ai-avatar"><img src="assets/avatar.png" alt="EverlynxAI"></div>
+                    <div>
+                        <h3>EverlynxAI</h3>
+                        <span class="status-indicator">Online</span>
+                    </div>
+                </div>
+            </header>
+            
+
+
+            <div id="chat-history" class="chat-history">
+                <div class="message ai-message fade-in">
+                    <div class="msg-avatar"><img src="assets/avatar.png" alt="EverlynxAI"></div>
+                    <div class="msg-bubble glass-panel">
+                        <p>Greetings. I am EverlynxAI, an advanced neural framework initialized by RyxerYT. How may I assist you today?</p>
+                        <span class="timestamp">Just now</span>
+                    </div>
+                </div> 
+            </div>
+
+            <div class="input-area glass-panel">
+                <form id="chat-form">
+                    <input type="text" id="chat-input" placeholder="Communicate with EverlynxAI..." autocomplete="off">
+                    <button type="submit" id="send-btn" class="primary-btn icon-btn"><i class="fa-solid fa-paper-plane"></i></button>
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <div id="settings-modal" class="modal-overlay hidden">
+        <div class="modal-content glass-panel">
+            <div class="modal-header">
+                <h2>System Preferences</h2>
+                <button id="close-settings-btn" class="icon-btn"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="setting-group">
+                    <label for="api-key-input">External API Key (Optional)</label>
+                    <p class="setting-desc">If left blank, EverlynxAI will utilize its internal simulated neural network.</p>
+                    <input type="password" id="api-key-input" placeholder="sk-...">
+                    <button id="save-api-key-btn" class="secondary-btn">Save Key</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
