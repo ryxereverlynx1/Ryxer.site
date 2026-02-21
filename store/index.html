@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EverlynxStore</title>
+    <link href="assets/avatar.png" rel="icon" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body data-theme="everlynx">
+    <div class="overlay" id="bg-overlay"></div>
+
+    <div id="auth-screen" class="auth-container">
+        <div class="card auth-card" id="login-box">
+            <div class="auth-logo"><i class="fas fa-bolt"></i> Everlynx</div>
+            <h2 class="title" style="margin-bottom: 20px; font-size: 1.8rem;">Welcome Back</h2>
+            <form id="login-form">
+                <div class="input-group">
+                    <i class="fas fa-user"></i>
+                    <input type="text" id="login-username" placeholder="Username" required>
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="login-password" placeholder="Password" required>
+                </div>
+                <p id="login-error" class="error-text hidden">Invalid credentials.</p>
+                <button type="submit" class="btn btn-primary btn-block">Login</button>
+            </form>
+            <p class="auth-switch" style="margin-top: 15px;">
+                <span onclick="toggleAuth('forgot')">Forgot Password?</span>
+            </p>
+            <p class="auth-switch" style="margin-top: 10px;">
+                Don't have an account? <span onclick="toggleAuth('register')">Register</span>
+            </p>
+        </div>
+
+        <div class="card auth-card hidden" id="register-box">
+            <div class="auth-logo"><i class="fas fa-bolt"></i> Everlynx</div>
+            <h2 class="title" style="margin-bottom: 20px; font-size: 1.8rem;">Create Account</h2>
+            <form id="register-form">
+                <div class="input-group">
+                    <i class="fas fa-user"></i>
+                    <input type="text" id="reg-username" placeholder="Username" required>
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" id="reg-email" placeholder="Email" required>
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="reg-password" placeholder="Password" required>
+                </div>
+                <p id="reg-error" class="error-text hidden">Username already exists.</p>
+                <button type="submit" class="btn btn-primary btn-block">Register</button>
+            </form>
+            <p class="auth-switch">Already have an account? <span onclick="toggleAuth('login')">Login</span></p>
+        </div>
+
+        <div class="card auth-card hidden" id="forgot-box">
+            <div class="auth-logo"><i class="fas fa-bolt"></i> Everlynx</div>
+            <h2 class="title" style="margin-bottom: 20px; font-size: 1.8rem;">Reset Password</h2>
+            <form id="forgot-form">
+                <div class="input-group">
+                    <i class="fas fa-user"></i>
+                    <input type="text" id="forgot-username" placeholder="Username" required>
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" id="forgot-email" placeholder="Account Email" required>
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-key"></i>
+                    <input type="password" id="forgot-new-password" placeholder="New Password" required>
+                </div>
+                <p id="forgot-error" class="error-text hidden">Account not found or email mismatch.</p>
+                <p id="forgot-success" class="hidden" style="color: #2ecc71; font-size: 0.9rem; margin-bottom: 15px;">Password reset successful!</p>
+                <button type="submit" class="btn btn-primary btn-block">Reset Password</button>
+            </form>
+            <p class="auth-switch">Remembered it? <span onclick="toggleAuth('login')">Back to Login</span></p>
+        </div>
+    </div>
+
+    <div id="app-container" class="hidden">
+        
+        <div class="logo-container">
+            <span class="logo-text">EverlynxStore</span>
+        </div>
+
+        <div class="top-right-controls">
+            <div class="theme-switcher-container">
+                <button class="theme-toggle-btn" id="userToggleBtn" title="Profile">
+                    <i class="fas fa-user"></i>
+                    <span id="nav-username">User</span>
+                </button>
+                <div class="theme-dropdown" id="userDropdown">
+                    <button class="theme-option" onclick="logout()">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </button>
+                </div>
+            </div>
+
+            <div class="music-container">
+                <button class="music-toggle-btn" id="musicToggleBtn" title="Music Player">
+                    <i class="fas fa-music"></i>
+                    <span id="musicLabel">Music</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="music-dropdown" id="musicDropdown">
+                    <div class="music-now-playing">
+                        <div class="music-icon-wrap"><i class="fas fa-music"></i></div>
+                        <div class="music-info">
+                            <span class="music-track-name" id="musicTrackName">Default Track</span>
+                            <span class="music-track-status" id="musicTrackStatus">Paused</span>
+                        </div>
+                    </div>
+                    <div class="music-controls-row">
+                        <button class="music-ctrl-btn" id="musicPrev"><i class="fas fa-step-backward"></i></button>
+                        <button class="music-ctrl-btn music-ctrl-play" id="musicPlay"><i class="fas fa-play" id="playIcon"></i></button>
+                        <button class="music-ctrl-btn" id="musicNext"><i class="fas fa-step-forward"></i></button>
+                    </div>
+                    <div class="music-vol-row">
+                        <i class="fas fa-volume-down music-vol-icon"></i>
+                        <input type="range" id="musicVolume" class="music-vol-slider" min="0" max="100" value="50">
+                        <i class="fas fa-volume-up music-vol-icon"></i>
+                    </div>
+                    <div class="music-playlist-list">
+                        <label for="custom-music-upload" class="theme-option" style="cursor:pointer; text-align:center;">
+                            <i class="fas fa-upload"></i> Upload Own Track
+                        </label>
+                        <input type="file" id="custom-music-upload" accept="audio/*" class="hidden">
+                    </div>
+                    <audio id="bg-music" loop>
+                        <source id="audio-source" src="assets/default-music.mp3" type="audio/mpeg">
+                    </audio>
+                </div>
+            </div>
+
+            <div class="theme-switcher-container">
+                <button class="theme-toggle-btn" id="themeToggleBtn" title="Change Theme">
+                    <i class="fas fa-palette"></i>
+                    <span id="themeLabel">Everlynx Theme</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="theme-dropdown" id="themeDropdown">
+                    <button class="theme-option" onclick="setTheme('everlynx', 'Everlynx Theme')">
+                        <i class="fas fa-moon"></i> Everlynx
+                    </button>
+                    <button class="theme-option" onclick="setTheme('dark', 'Dark Theme')">
+                        <i class="fas fa-circle"></i> Dark
+                    </button>
+                    <button class="theme-option" onclick="setTheme('light', 'Light Theme')">
+                        <i class="fas fa-sun"></i> Light
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <nav class="navbar">
+            <a href="\">Home</a>
+            <a href="#discord-bots">Discord Bots</a>
+            <a href="#mc-skripts">MC Skripts</a>
+            <a href="#websites">Websites</a>
+            <a href="#contact">Contact</a>
+            <a href="\ai">AI</a>
+            <a href="\portfolio">Portfolio</a>
+        </nav>
+
+        <div class="container">
+            <section id="home" class="reveal section hero-section">
+                <div class="card hero-card">
+                    <div class="avatar-container">
+                        <img id="main-avatar" src="assets/avatar.png" alt="Avatar" style="border-radius:50%; width:100px; height:100px; border:3px solid var(--primary-color);">
+                    </div>
+                    <h1 class="title">EverlynxStore</h1>
+                    <p class="subtitle role">Premium Digital Assets by RyxerEverlynx</p>
+                    <p class="bio">High-quality Discord Bots, Minecraft Skripts, and Web Solutions.</p>
+                    <div class="cta-buttons">
+                        <a href="#discord-bots" class="btn btn-primary">Browse Store</a>
+                        <a href="#contact" class="btn btn-secondary">Get In Touch</a>
+                    </div>
+                </div>
+            </section>
+
+            <section id="discord-bots" class="reveal section">
+                <h2>Discord Bots</h2>
+                <div class="projects-grid">
+                    <div class="card">
+                        <h3><i class="fab fa-discord"></i> Basic Plan</h3>
+                        <h2 class="price">$9.99</h2>
+                        <ul class="work-list">
+                            <li>Prefix Commands (10)</li>
+                            <li>Custom Status</li>
+                            <li>Standard Support</li>
+                            <li>Contact for details!</li>
+                        </ul>
+                        <a href="#contact" class="btn btn-store btn-block">Contact to Buy</a>
+                    </div>
+                    <div class="card featured-card">
+                        <h3><i class="fab fa-discord"></i> Pro Plan</h3>
+                        <h2 class="price">$24.99</h2>
+                        <ul class="work-list">
+                            <li>Slash Commands (20)</li>
+                            <li>Text Identifing</li>
+                            <li>Priority Support</li>
+                            <li>Contact for details!</li>
+                        </ul>
+                        <a href="#contact" class="btn btn-primary btn-block">Contact to Buy</a>
+                    </div>
+                    <div class="card">
+                        <h3><i class="fab fa-discord"></i> Ultimate Plan</h3>
+                        <h2 class="price">$49.99</h2>
+                        <ul class="work-list">
+                            <li>Slash Commands (50)</li>
+                            <li>AI Intigration</li>
+                            <li>24/7 Support</li>
+                            <li>Contact for details!</li>
+                        </ul>
+                        <a href="#contact" class="btn btn-store btn-block">Contact to Buy</a>
+                    </div>
+                </div>
+            </section>
+
+            <section id="mc-skripts" class="reveal section">
+                <h2>Minecraft Skripts</h2>
+                <div class="projects-grid">
+                    <div class="card">
+                        <h3><i class="fas fa-scroll"></i> Starter Plan</h3>
+                        <h2 class="price">$5.99</h2>
+                        <ul class="work-list">
+                            <li>Core Utilities</li>
+                            <li>Basic Configuration</li>
+                            <li>Lightweight</li>
+                            <li>Contact for details!</li>
+                        </ul>
+                        <a href="#contact" class="btn btn-store btn-block">Contact to Buy</a>
+                    </div>
+                    <div class="card featured-card">
+                        <h3><i class="fas fa-scroll"></i> Advanced Plan</h3>
+                        <h2 class="price">$19.99</h2>
+                        <ul class="work-list">
+                            <li>Advanced mechanics</li>
+                            <li>GUI-based systems</li>
+                            <li>Priority support</li>
+                            <li>Contact for details!</li>
+                        </ul>
+                        <a href="#contact" class="btn btn-primary btn-block">Contact to Buy</a>
+                    </div>
+                    <div class="card">
+                        <h3><i class="fas fa-scroll"></i> Premium Plan</h3>
+                        <h2 class="price">$49.99 - $79.99</h2>
+                        <ul class="work-list">
+                            <li>Full Gamemodes</li>
+                            <li>Custom balancing</li>
+                            <li>Priority Support</li>
+                            <li>Contact for details!</li>
+                        </ul>
+                        <a href="#contact" class="btn btn-store btn-block">Contact to Buy</a>
+                    </div>
+                </div>
+            </section>
+
+            <section id="websites" class="reveal section">
+                <h2>Websites</h2>
+                <div class="projects-grid">
+                    <div class="card">
+                        <h3><i class="fas fa-code"></i> Landing Plan</h3>
+                        <h2 class="price">$9.99</h2>
+                        <ul class="work-list">
+                            <li>Single Page</li>
+                            <li>Responsive Design</li>
+                            <li>Contact Form</li>
+                            <li>Contact for details!</li>
+                        </ul>
+                        <a href="#contact" class="btn btn-store btn-block">Contact to Buy</a>
+                    </div>
+                    <div class="card featured-card">
+                        <h3><i class="fas fa-code"></i> Business Plan</h3>
+                        <h2 class="price">$49.99</h2>
+                        <ul class="work-list">
+                            <li>Multi-page Setup</li>
+                            <li>CMS Integration</li>
+                            <li>SEO Optimized</li>
+                            <li>Contact for details!</li>
+                        </ul>
+                        <a href="#contact" class="btn btn-primary btn-block">Contact to Buy</a>
+                    </div>
+                    <div class="card">
+                        <h3><i class="fas fa-code"></i> Enterprise Plan</h3>
+                        <h2 class="price">$99.99 - $199.99</h2>
+                        <ul class="work-list">
+                            <li>Custom Web App</li>
+                            <li>Database Logic</li>
+                            <li>Full Stack Support</li>
+                            <li>Contact for details!</li>
+                        </ul>
+                        <a href="#contact" class="btn btn-store btn-block">Contact to Buy</a>
+                    </div>
+                </div>
+            </section>
+
+            <section id="contact" class="reveal section">
+                <h2>Get In Touch</h2>
+                <div class="card contact-card">
+                    <div class="contact-content">
+                        <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <h3>Email</h3>
+                            <p class="copyable-text" onclick="copyToClipboard('ryxereverlynx@gmail.com')" title="Click to copy email">
+                                ryxereverlynx@gmail.com
+                            </p>
+                        </div>
+                    </div>
+                        <div class="contact-item">
+                        <i class="fab fa-discord"></i>
+                        <div>
+                            <h3>Discord</h3>
+                            <a href="https://discord.com/invite/W7SwFGPZRK" target="_blank" class="contact-link" title="Join my Discord Server">
+                                EverlynxStore
+                            </a>
+                        </div>
+                    </div>
+                    </div>
+                    <div class="contact-form" style="width: 100%;">
+                        <form id="contact-form" style="display:flex; flex-direction:column; gap:10px;">
+                            <input type="hidden" name="access_key" value="c54e8dcf-2d57-436e-8a0d-07cf59582336">
+                            
+                            <input type="text" name="name" placeholder="Your Name" required style="padding:12px; border-radius:8px; border:1px solid var(--border); background:var(--input-bg); color:var(--text);">
+                            <input type="email" name="email" placeholder="Your Email" required style="padding:12px; border-radius:8px; border:1px solid var(--border); background:var(--input-bg); color:var(--text);">
+                            <textarea name="message" rows="5" placeholder="Your Message" required style="padding:12px; border-radius:8px; border:1px solid var(--border); background:var(--input-bg); color:var(--text);"></textarea>
+                            
+                            <button type="submit" id="contact-submit-btn" class="btn btn-primary">Send Message</button>
+                            <p id="contact-status" class="hidden" style="text-align:center; font-weight:bold; margin-top:10px;"></p>
+                        </form>
+                    </div>
+                </div>
+            </section>
+
+            <footer class="footer">
+                <p>&copy; 2026 Everlynx. Created by RyxerEverlynx. All rights reserved.</p>
+            </footer>
+        </div>
+    </div>
+    <div id="toast" class="toast">
+        <i class="fas fa-check-circle"></i> 
+        <span id="toast-msg">Copied successfully!</span>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

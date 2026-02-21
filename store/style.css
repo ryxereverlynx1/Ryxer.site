@@ -1,0 +1,487 @@
+/* --- THEME VARIABLES --- */
+:root {
+    /* Everlynx Theme (Default) */
+    --bg-color: #0b0914;
+    --text: #ffffff;
+    --text-muted: #b3b3b3;
+    --primary-color: #9b59b6;
+    --primary-hover: #8e44ad;
+    --card-bg: rgba(20, 15, 30, 0.6);
+    --nav-bg: rgba(11, 9, 20, 0.8);
+    --border: rgba(155, 89, 182, 0.3);
+    --input-bg: rgba(255, 255, 255, 0.1);
+    --glass: blur(10px);
+}
+
+[data-theme="dark"] {
+    --bg-color: #121212;
+    --text: #f1f1f1;
+    --text-muted: #888;
+    --primary-color: #555555;
+    --primary-hover: #777;
+    --card-bg: #1e1e1e;
+    --nav-bg: #181818;
+    --border: #333;
+    --input-bg: #2a2a2a;
+    --glass: none;
+}
+
+[data-theme="light"] {
+    --bg-color: #f4f5f7;
+    --text: #333;
+    --text-muted: #666;
+    --primary-color: #007bff;
+    --primary-hover: #0056b3;
+    --card-bg: #ffffff;
+    --nav-bg: #ffffff;
+    --border: #ddd;
+    --input-bg: #eee;
+    --glass: none;
+    .btn-store { background: #126b0f; color: #fff; }
+}
+
+/* --- RESET & BASE --- */
+html{
+    scroll-behavior: smooth;
+}
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    transition: ease 0.5s;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text);
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+}
+
+.hidden { display: none !important; }
+
+/* Animated Background for Everlynx Theme */
+.overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    z-index: -1;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+[data-theme="everlynx"] .overlay {
+    background-image: url('assets/background.gif');
+    opacity: 0.3;
+    filter: blur(8px);
+}
+
+/* --- IMPROVED AUTHENTICATION SCREEN --- */
+.auth-container {
+    position: fixed;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(15px);
+    z-index: 9999;
+}
+
+.auth-card {
+    width: 100%; max-width: 420px;
+    padding: 3rem 2.5rem;
+    text-align: center;
+    border-radius: 16px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+    animation: authFadeIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes authFadeIn {
+    from { opacity: 0; transform: translateY(-20px) scale(0.95); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.auth-logo {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: var(--primary-color);
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+}
+
+.input-group {
+    position: relative;
+    margin-bottom: 15px;
+}
+
+.input-group i {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    transition: color 0.3s;
+}
+
+.auth-card input {
+    width: 100%;
+    padding: 14px 14px 14px 45px; /* Extra left padding for the icon */
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--input-bg);
+    color: var(--text);
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.auth-card input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 10px rgba(155, 89, 182, 0.2);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.auth-card input:focus + i, 
+.input-group:focus-within i {
+    color: var(--primary-color); /* Icon lights up when typing */
+}
+
+.auth-switch {
+    margin-top: 20px;
+    font-size: 0.95rem;
+    color: var(--text-muted);
+}
+.auth-switch span {
+    color: var(--primary-color);
+    cursor: pointer;
+    font-weight: bold;
+    transition: text-shadow 0.3s;
+}
+.auth-switch span:hover {
+    text-shadow: 0 0 8px var(--primary-color);
+}
+
+
+/* --- FIXED MUSIC PLAYER BUTTONS --- */
+.music-dropdown { width: 280px; padding: 20px; }
+.music-now-playing { 
+    display: flex; gap: 15px; align-items: center; 
+    margin-bottom: 20px; border-bottom: 1px solid var(--border); 
+    padding-bottom: 15px; 
+}
+.music-icon-wrap { font-size: 1.8rem; color: var(--primary-color); }
+.music-info { display: flex; flex-direction: column; overflow: hidden; }
+.music-track-name { font-weight: bold; font-size: 0.95rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.music-track-status { font-size: 0.85rem; color: var(--text-muted); margin-top: 3px; }
+
+/* The fix for overlapping buttons */
+.music-controls-row { 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    gap: 20px; /* Forces space between buttons */
+    margin-bottom: 20px; 
+}
+
+.music-ctrl-btn { 
+    background: var(--input-bg); 
+    border: 1px solid var(--border); 
+    color: var(--text); 
+    width: 40px; height: 40px; /* Fixed circular sizes */
+    border-radius: 50%; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+    cursor: pointer; 
+    transition: all 0.2s ease;
+}
+
+.music-ctrl-play {
+    width: 50px; height: 50px; /* Play button slightly larger */
+    background: var(--primary-color);
+    color: #fff;
+    border: none;
+    font-size: 1.2rem;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+.music-ctrl-btn:hover { 
+    transform: scale(1.1); 
+    background: var(--primary-hover);
+    color: #fff;
+    border-color: transparent;
+}
+
+.music-vol-row { display: flex; align-items: center; gap: 12px; margin-bottom: 15px; }
+.music-vol-slider { flex-grow: 1; cursor: pointer; accent-color: var(--primary-color); }
+
+/* --- TOP CONTROLS (Logo, Theme, Music) --- */
+.logo-container {
+    position: fixed;
+    top: 20px; left: 20px;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.logo-btn {
+    background: var(--card-bg);
+    color: var(--text);
+    padding: 10px 15px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    backdrop-filter: var(--glass);
+    text-decoration: none;
+}
+.logo-text { font-weight: bold; font-size: 1.5rem; }
+
+.top-right-controls {
+    position: fixed;
+    top: 20px; right: 20px;
+    z-index: 1000;
+    display: flex;
+    gap: 15px;
+}
+.theme-switcher-container, .music-container { position: relative; }
+.theme-toggle-btn, .music-toggle-btn {
+    background: var(--card-bg);
+    color: var(--text);
+    border: 1px solid var(--border);
+    padding: 10px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    backdrop-filter: var(--glass);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.theme-dropdown, .music-dropdown {
+    position: absolute;
+    top: 110%; right: 0;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    width: 220px;
+    display: none;
+    flex-direction: column;
+    backdrop-filter: var(--glass);
+    overflow: hidden;
+}
+.theme-dropdown.show, .music-dropdown.show { display: flex; }
+.theme-option {
+    background: transparent;
+    border: none;
+    color: var(--text);
+    padding: 12px;
+    text-align: left;
+    cursor: pointer;
+    width: 100%;
+}
+.theme-option:hover { background: var(--primary-color); color: #fff; }
+
+
+/* --- NAVIGATION --- */
+.navbar {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--nav-bg);
+    border: 1px solid var(--border);
+    border-radius: 50px;
+    display: flex;
+    padding: 10px 20px;
+    gap: 20px;
+    z-index: 1000;
+    backdrop-filter: var(--glass);
+}
+.navbar a {
+    color: var(--text);
+    text-decoration: none;
+    font-weight: 500;
+    padding: 5px 10px;
+    border-radius: 20px;
+}
+.navbar a:hover { background: var(--primary-color); color: #fff; }
+
+/* --- MAIN LAYOUT & SECTIONS --- */
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 100px 20px 100px; /* Space for top controls and bottom nav */
+}
+.section { margin-bottom: 4rem; }
+.section h2 { text-align: center; margin-bottom: 2rem; font-size: 1.9rem; color: var(--primary-color); }
+
+.card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 2rem;
+    backdrop-filter: var(--glass);
+    position: relative; 
+    overflow: hidden;
+    transition: ease 0.2s;
+
+}
+.card:hover{
+    transform: scale(1.04);
+}
+/* --- HOVER GLINT EFFECT --- */
+.card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -150%; /* Start completely off-screen to the left */
+    width: 60%;
+    height: 100%;
+    /* Creates the fading light beam */
+    background: linear-gradient(
+        to right,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.2) 50%,
+        rgba(255, 255, 255, 0) 100%
+    );
+    transform: skewX(-0deg); /* Angles the light beam diagonally */
+    transition: left 1.2s cubic-bezier(0.25, 1, 0.5, 1); /* Smooth sweeping speed */
+    z-index: 1;
+    pointer-events: none; /* Ensures the glare doesn't block you from clicking buttons */
+}
+
+.card:hover::before {
+    left: 200%; /* Sweeps all the way across to the right on hover */
+
+}
+
+/* Ensure card content stays above the glint */
+.card > * {
+    position: relative;
+    z-index: 2;
+}
+.featured-card { border: 2px solid var(--primary-color); transform: scale(1.02); }
+
+/* Hero Section */
+.hero-section { text-align: center; }
+.hero-card { display: flex; flex-direction: column; align-items: center; gap: 15px; }
+.title { font-size: 2.5rem; }
+.subtitle { color: var(--text-muted); font-size: 1.2rem; }
+
+/* Buttons */
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+    text-align: center;
+}
+.btn-primary { background: var(--primary-color); color: #fff; }
+.btn-secondary { background: transparent; color: var(--text); border: 1px solid var(--border); }
+.btn-store { background: #526b51; color: #fff; }
+.btn-block { width: 100%; display: block; margin-top: 15px; }
+.btn:hover { opacity: 0.8; transform: translateY(-2px); }
+
+/* Grids */
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+}
+.price { font-size: 2rem; margin: 15px 0; }
+.work-list { list-style: none; text-align: left; }
+.work-list li { padding: 8px 0; border-bottom: 1px solid var(--border); font-size: 0.95rem; }
+
+/* Contact Section */
+.contact-card { display: flex; gap: 30px; flex-wrap: wrap; }
+.contact-content { flex: 1; min-width: 250px; }
+.contact-item { display: flex; gap: 15px; margin-bottom: 20px; align-items: center; }
+.contact-item i { font-size: 1.5rem; color: var(--primary-color); }
+
+.footer { text-align: center; color: var(--text-muted); font-size: 0.9rem; padding-bottom: 40px; }
+/* --- COPYABLE TEXT --- */
+.copyable-text {
+    color: var(--primary-color);
+    cursor: pointer;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    transition: color 0.3s;
+}
+.copyable-text:hover {
+    color: var(--primary-hover);
+    text-decoration: underline;
+}
+.copy-icon {
+    font-size: 0.85rem;
+    margin-left: 8px;
+    opacity: 0.7;
+}
+
+/* --- TOAST NOTIFICATION --- */
+.toast {
+    position: fixed;
+    bottom: -100px; /* Hidden off-screen by default */
+    right: 20px;
+    background: var(--card-bg);
+    color: var(--text);
+    padding: 15px 25px;
+    border-radius: 8px;
+    border-left: 4px solid #2ecc71; /* Green success accent */
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    z-index: 10000;
+    backdrop-filter: var(--glass);
+    /* Bouncy slide-in animation */
+    transition: bottom 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55); 
+}
+.toast.show {
+    bottom: 20px; /* Slides into view */
+}
+.toast i {
+    color: #2ecc71;
+    font-size: 1.2rem;
+}
+/* --- CONTACT LINKS --- */
+.contact-link {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    transition: color 0.3s;
+}
+
+.contact-link:hover {
+    color: var(--primary-hover);
+    text-decoration: underline;
+}
+
+.contact-link i {
+    font-size: 0.85rem;
+    margin-left: 8px;
+    opacity: 0.7;
+}
+
+/* --- SCROLL REVEAL ANIMATIONS --- */
+.reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 0.8s cubic-bezier(0.5, 0, 0, 1); /* Smooth snap-into-place curve */
+}
+
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Staggered loading for pricing cards in grids */
+.projects-grid .card.reveal:nth-child(1) { transition-delay: 0.1s; }
+.projects-grid .card.reveal:nth-child(2) { transition-delay: 0.25s; }
+.projects-grid .card.reveal:nth-child(3) { transition-delay: 0.4s; }
