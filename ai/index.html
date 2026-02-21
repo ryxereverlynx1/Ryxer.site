@@ -140,7 +140,31 @@
             </div>
         </div>
     </div>
-
+<div id="feedback-modal" class="modal-overlay" style="display: none;">
+    <div class="modal-content glass-panel">
+        <span class="close-modal">&times;</span>
+        <h3>System Feedback</h3>
+        <p>Report issues or upload screenshots.</p>
+        
+        <form id="feedback-form" action="https://api.web3forms.com/submit" method="POST" enctype="multipart/form-data">
+            <input type="hidden" name="access_key" value="acec2223-6100-4936-8b2f-27029081fc18">
+            <input type="hidden" name="subject" value="New AI Feedback with Screenshot">
+            
+            <textarea name="message" placeholder="Describe the issue..." required></textarea>
+            <div id="image-preview-container" style="display: none; margin-bottom: 15px;">
+                <img id="feedback-preview" src="" style="width: 100%; border-radius: 8px; border: 1px solid var(--glass-border);">
+            </div>
+            <div class="file-upload-wrapper">
+                <label for="feedback-image" class="file-label">
+                    <i class="fa-solid fa-camera"></i> Attach Screenshot (Optional)
+                </label>
+                <input type="file" id="feedback-image" name="attachment" accept="image/*">
+            </div>
+            
+            <button type="submit" class="primary-btn">Transmit Feedback</button>
+        </form>
+    </div>
+</div>
     <script src="script.js"></script>
 </body>
 </html>
